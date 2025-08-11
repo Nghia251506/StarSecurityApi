@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StarSecurityApi.Models;
+using StarSecurityApi.DTOs;
 using StarSecurityApi.Services;
 
 namespace StarSecurityApi.Controllers
@@ -15,7 +16,7 @@ namespace StarSecurityApi.Controllers
             _employeeService = employeeService;
         }
 
-        [HttpGet]
+        [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
             var employees = await _employeeService.GetAllAsync();

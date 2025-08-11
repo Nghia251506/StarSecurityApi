@@ -1,5 +1,5 @@
 using StarSecurityApi.DTOs;
-
+using StarSecurityApi.Models;
 namespace StarSecurityApi.Services
 {
     public interface IEmployeeService

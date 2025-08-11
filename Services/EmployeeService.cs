@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using StarSecurityApi.Data;
 using StarSecurityApi.Models;
+using StarSecurityApi.DTOs;
+
 
 namespace StarSecurityApi.Services
 {

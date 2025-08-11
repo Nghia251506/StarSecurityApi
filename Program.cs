@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
+using StarSecurityApi.Services;
+using StarSecurityApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,7 +68,11 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
-app.UseSwagger(); app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,0 +1,22 @@
+# Build
+bin/
+obj/
+
+# Visual Studio
+.vs/
+
+# User-specific files
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Secrets
+secrets.json
+
+# Node modules nếu dự án có frontend
+node_modules/
+
+# Environment files
+.env
