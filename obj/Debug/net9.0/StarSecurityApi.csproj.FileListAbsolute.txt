@@ -1,0 +1,8 @@
+C:\Users\Administrator\Desktop\New folder\Sem3_backend\StarSecurityApi\obj\Debug\net9.0\StarSecurityApi.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\New folder\Sem3_backend\StarSecurityApi\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\Administrator\Desktop\New folder\Sem3_backend\StarSecurityApi\obj\Debug\net9.0\StarSecurityApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\New folder\Sem3_backend\StarSecurityApi\obj\Debug\net9.0\StarSecurityApi.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\New folder\Sem3_backend\StarSecurityApi\obj\Debug\net9.0\StarSecurityApi.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\New folder\Sem3_backend\StarSecurityApi\obj\Debug\net9.0\StarSecurityApi.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\New folder\Sem3_backend\StarSecurityApi\obj\Debug\net9.0\StarSecurityApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Administrator\Desktop\New folder\Sem3_backend\StarSecurityApi\obj\Debug\net9.0\StarSecurityApi.MvcApplicationPartsAssemblyInfo.cache
