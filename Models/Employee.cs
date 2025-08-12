@@ -12,7 +12,9 @@ namespace StarSecurityApi.Models
         public string? Email { get; set; }
         public string? Education { get; set; }
         public int? DepartmentId { get; set; }
+        public Department Department { get; set; }
         public int? GradeId { get; set; }
+        public Grade Grade { get; set; }
         public string? JobTitle { get; set; }
         public DateTime? DateOfJoin { get; set; }
         public string Status { get; set; } = "active";

@@ -5,6 +5,7 @@ using System.Text;
 using System.Security.Claims;
 using StarSecurityApi.Services;
 using StarSecurityApi.Data;
+using StarSecurityApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,7 +65,10 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Register service
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IGradeService, GradeService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();

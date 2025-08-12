@@ -1,6 +1,6 @@
-namespace StarSecurityApi.Models
+namespace StarSecurityApi.DTOs
 {
-    public class Grade
+    public class GradeReadDto
     {
         public int Id { get; set; }
         public string? Name { get; set; }

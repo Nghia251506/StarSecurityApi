@@ -1,0 +1,81 @@
+using Microsoft.EntityFrameworkCore;
+using StarSecurityApi.Data;
+using StarSecurityApi.Models;
+using StarSecurityApi.DTOs;
+using StarSecurityApi.Dtos;
+
+namespace StarSecurityApi.Service
+{
+    public class UserService : IUserService
+    {
+        private readonly AppDbContext _context; //Declaration
+
+        public UserService(AppDbContext context) //contructor
+        {
+            _context = context;
+        }
+
+        public async Task<IEnumerable<User>> GetAllSync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        public async Task<User?> GetByIdAsync(int id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task<UserReadDto> CreateAsync(UserCreateDto dto)
+        {
+            var user = new User
+            {
+                Id = dto.Id,
+                EmployeeId = dto.Employee_id,
+                Username = dto.Username,
+                PasswordHash = dto.Password_hash,
+                AuthRoleId = dto.Auth_role_id,
+                LastLogin = dto.Last_login,
+                CreatedAt = dto.CreateAt
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return new UserReadDto
+            {
+                Id = user.Id,
+                Employee_id = user.EmployeeId,
+                Username = user.Username,
+                Password_hash = user.PasswordHash,
+                Auth_role_id = user.AuthRoleId,
+                Last_login = user.LastLogin,
+                CreateAt = user.CreatedAt
+            };
+        }
+
+        public async Task<bool> UpdateAsync(int id, User user)
+        {
+            var existing = await _context.Users.FindAsync(id);
+            if (existing == null) return false;
+
+            // existing.EmployeeId = user.EmployeeId;
+            existing.Username = user.Username;
+            existing.PasswordHash = user.PasswordHash;
+            // existing.AuthRoleId = user.AuthRoleId;
+            // existing.LastLogin = user.LastLogin;
+            // existing.CreatedAt = user.CreatedAt;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var emp = await _context.Users.FindAsync(id);
+            if (emp == null) return false;
+
+            _context.Users.Remove(emp);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+    }
+}
