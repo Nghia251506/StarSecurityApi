@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StarSecurityApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+addf7b61edeebc3dedea7eb697b920d1f2ebe5ee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dc38cd9b720cb2f5a5049ba5591d6d94d5a807ce")]
 [assembly: System.Reflection.AssemblyProductAttribute("StarSecurityApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StarSecurityApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

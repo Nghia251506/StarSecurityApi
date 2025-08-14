@@ -69,6 +69,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IGradeService, GradeService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IAuthRoleService, AuthRoleService>();
+builder.Services.AddScoped<BranchService>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IClientServiceService, ClientServiceService>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
