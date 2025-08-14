@@ -1,11 +1,11 @@
-public class AuthRole
+namespace StarSecurityApi.DTOs
 {
-   public int Id { get; set; }
-        public string Name { get; set; } = string.Empty; // admin, manager, staff
+    public class AuthRoleUpdateDto
+    {
         public string? Description { get; set; }
         public bool CanManageEmployees { get; set; }
         public bool CanManageServices { get; set; }
         public bool CanManageVacancies { get; set; }
         public bool CanManageClients { get; set; }
-        public DateTime CreatedAt { get; set; }
+    }
 }
