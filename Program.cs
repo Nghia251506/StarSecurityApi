@@ -76,6 +76,11 @@ builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IClientServiceService, ClientServiceService>();
+builder.Services.AddScoped<IStaffAssignmentService, StaffAssignmentService>();
+builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<IVacancyService, VacancyService>();
+builder.Services.AddScoped<IVacancyApplicationService, VacancyApplicationService>();
+builder.Services.AddScoped<ITestimonialService, TestimonialService>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
