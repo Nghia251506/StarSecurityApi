@@ -6,6 +6,7 @@ using System.Security.Claims;
 using StarSecurityApi.Services;
 using StarSecurityApi.Data;
 using StarSecurityApi.Service;
+using StarSecurityApi.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +62,19 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // cho phép frontend này
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -81,6 +95,7 @@ builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IVacancyService, VacancyService>();
 builder.Services.AddScoped<IVacancyApplicationService, VacancyApplicationService>();
 builder.Services.AddScoped<ITestimonialService, TestimonialService>();
+builder.Services.AddSingleton<JwtHelper>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
@@ -89,6 +104,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

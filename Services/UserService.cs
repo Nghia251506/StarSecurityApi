@@ -25,6 +25,25 @@ namespace StarSecurityApi.Service
             return await _context.Users.FirstOrDefaultAsync(e => e.Id == id);
         }
 
+        public async Task<User?> GetByUsernameAsync(string username)
+        {
+            return await _context.Users.FirstOrDefaultAsync(e => e.Username == username);
+        }
+
+        public async Task<User?> LoginAsync(string username, string password)
+        {
+            var user = await _context.Users
+                .Include(u => u.AuthRole)  // load role từ database
+                .FirstOrDefaultAsync(u => u.Username == username);
+
+            if (user == null) return null;
+
+            // kiểm tra password hash
+            if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+                return null;
+
+            return user;
+        }
         public async Task<UserReadDto> CreateAsync(UserCreateDto dto)
         {
             var user = new User
@@ -32,7 +51,7 @@ namespace StarSecurityApi.Service
                 Id = dto.Id,
                 EmployeeId = dto.Employee_id,
                 Username = dto.Username,
-                PasswordHash = dto.Password_hash,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password_hash),
                 AuthRoleId = dto.Auth_role_id,
                 LastLogin = dto.Last_login,
                 CreatedAt = dto.CreateAt

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using StarSecurityApi.Data;
 using StarSecurityApi.Models;
-using StarSecurityApi.DTOs;
+using StarSecurityApi.Dtos.Employee;
 
 
 namespace StarSecurityApi.Services
@@ -15,30 +15,54 @@ namespace StarSecurityApi.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Employee>> GetAllAsync()
+        public async Task<IEnumerable<EmployeeReadDto>> GetAllAsync()
         {
-            return await _context.Employees.ToListAsync();
+            return await _context.Employees
+                .Select(e => new EmployeeReadDto
+                {
+                    Id = e.Id,
+                    EmployeeCode = e.EmployeeCode,
+                    FullName = e.FullName,
+                    Phone = e.Phone,
+                    Email = e.Email,
+                    JobTitle = e.JobTitle,
+                    Status = e.Status,
+                })
+                .ToListAsync();
         }
 
-        public async Task<Employee?> GetByIdAsync(int id)
+        public async Task<EmployeeReadDto?> GetByIdAsync(int id)
         {
-            return await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
+            var emp = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+            if (emp == null) return null;
+
+            return new EmployeeReadDto
+            {
+                Id = emp.Id,
+                EmployeeCode = emp.EmployeeCode,
+                FullName = emp.FullName,
+                Phone = emp.Phone,
+                Email = emp.Email,
+                JobTitle = emp.JobTitle,
+                Status = emp.Status,
+            };
         }
 
         public async Task<EmployeeReadDto> CreateAsync(EmployeeCreateDto dto)
         {
             await _context.Database.ExecuteSqlRawAsync(
-                "CALL sp_add_employee({0},{1},{2},{3},{4},{5},{6},{7},{8},{9})",
+                "CALL sp_add_employee({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10})",
                 dto.FirstName,
                 dto.LastName ?? "",
                 dto.Address ?? "",
                 dto.Phone ?? "",
                 dto.Email ?? "",
                 dto.Education ?? "",
-                dto.DepartmentId ?? (object)DBNull.Value,
-                dto.GradeId ?? (object)DBNull.Value,
+                dto.DepartmentId ?? (object)null,
+                dto.GradeId ?? (object)null,
                 dto.JobTitle ?? "",
-                dto.DateOfJoin?.ToString("yyyy-MM-dd")
+                dto.DateOfJoin,
+                dto.Status ?? ""
             );
 
             var newEmp = await _context.Employees
@@ -50,29 +74,28 @@ namespace StarSecurityApi.Services
                 Id = newEmp.Id,
                 EmployeeCode = newEmp.EmployeeCode,
                 FullName = newEmp.FullName ?? $"{newEmp.FirstName} {newEmp.LastName}",
-                Address = newEmp.Address,
                 Phone = newEmp.Phone,
                 Email = newEmp.Email,
                 JobTitle = newEmp.JobTitle,
                 Status = newEmp.Status
             };
         }
-        public async Task<bool> UpdateAsync(int id, Employee employee)
+        public async Task<bool> UpdateAsync(int id, EmployeeUpdateDto dto)
         {
             var existing = await _context.Employees.FindAsync(id);
             if (existing == null) return false;
 
-            existing.FirstName = employee.FirstName;
-            existing.LastName = employee.LastName;
-            existing.Address = employee.Address;
-            existing.Phone = employee.Phone;
-            existing.Email = employee.Email;
-            existing.Education = employee.Education;
-            existing.DepartmentId = employee.DepartmentId;
-            existing.GradeId = employee.GradeId;
-            existing.JobTitle = employee.JobTitle;
-            existing.DateOfJoin = employee.DateOfJoin;
-            existing.Status = employee.Status;
+            existing.FirstName = dto.FirstName;
+            existing.LastName = dto.LastName;
+            existing.Address = dto.Address;
+            existing.Phone = dto.Phone;
+            existing.Email = dto.Email;
+            existing.Education = dto.Education;
+            existing.DepartmentId = dto.DepartmentId;
+            existing.GradeId = dto.GradeId;
+            existing.JobTitle = dto.JobTitle;
+            existing.DateOfJoin = dto.DateOfJoin;
+            existing.Status = dto.Status;
 
             await _context.SaveChangesAsync();
             return true;

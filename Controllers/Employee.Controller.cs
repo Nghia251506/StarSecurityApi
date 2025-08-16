@@ -1,60 +1,46 @@
 using Microsoft.AspNetCore.Mvc;
-using StarSecurityApi.Models;
-using StarSecurityApi.DTOs;
+using StarSecurityApi.Dtos.Employee;
 using StarSecurityApi.Services;
 
 namespace StarSecurityApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EmployeesController : ControllerBase
+    public class EmployeeController : ControllerBase
     {
-        private readonly IEmployeeService _employeeService;
-
-        public EmployeesController(IEmployeeService employeeService)
-        {
-            _employeeService = employeeService;
-        }
+        private readonly IEmployeeService _service;
+        public EmployeeController(IEmployeeService service) => _service = service;
 
         [HttpGet("getall")]
-        public async Task<IActionResult> GetAll()
-        {
-            var employees = await _employeeService.GetAllAsync();
-            return Ok(employees);
-        }
+        public async Task<IActionResult> GetAll() =>
+            Ok(await _service.GetAllAsync());
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var emp = await _employeeService.GetByIdAsync(id);
-            if (emp == null) return NotFound();
-            return Ok(emp);
+            var emp = await _service.GetByIdAsync(id);
+            return emp == null ? NotFound() : Ok(emp);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] EmployeeCreateDto dto)
+        public async Task<IActionResult> Create(EmployeeCreateDto dto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var newEmp = await _employeeService.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = newEmp.Id }, newEmp);
+            var emp = await _service.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = emp.Id }, emp);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Employee employee)
+        public async Task<IActionResult> Update(int id, EmployeeUpdateDto dto)
         {
-            var result = await _employeeService.UpdateAsync(id, employee);
-            if (!result) return NotFound();
-            return NoContent();
+            var ok = await _service.UpdateAsync(id, dto);
+            return ok ? NoContent() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _employeeService.DeleteAsync(id);
-            if (!result) return NotFound();
-            return NoContent();
+            var ok = await _service.DeleteAsync(id);
+            return ok ? NoContent() : NotFound();
         }
     }
 }

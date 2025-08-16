@@ -7,6 +7,7 @@ namespace StarSecurityApi.Dtos
         public string? Username { get; set; }
         public string? Password_hash { get; set; }
         public int Auth_role_id { get; set; }
+        public AuthRole AuthRole { get; set; }
         public DateTime? Last_login { get; set; }
         public DateTime CreateAt { get; set; }
     }

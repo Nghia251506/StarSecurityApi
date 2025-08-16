@@ -1,6 +1,6 @@
 namespace StarSecurityApi.Dtos.Employee
 {
-    public class EmployeeCreateDto
+    public class EmployeeUpdateDto
     {
         public string FirstName { get; set; } = null!;
         public string? LastName { get; set; }

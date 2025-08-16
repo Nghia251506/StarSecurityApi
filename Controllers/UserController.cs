@@ -4,6 +4,9 @@ using StarSecurityApi.DTOs;
 using StarSecurityApi.Services;
 using StarSecurityApi.Service;
 using StarSecurityApi.Dtos;
+using StarSecurityApi.Dtos.User;
+using System.IdentityModel.Tokens.Jwt;
+using StarSecurityApi.Helpers;
 
 namespace StarSecurityApi.Controllers
 {
@@ -14,9 +17,12 @@ namespace StarSecurityApi.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
+        private readonly JwtHelper _jwtHelper;
+
+        public UserController(IUserService userService, JwtHelper jwtHelper)
         {
             _userService = userService;
+            _jwtHelper = jwtHelper;
         }
 
         [HttpGet("getall")]
@@ -59,5 +65,28 @@ namespace StarSecurityApi.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        {
+            var user = await _userService.LoginAsync(loginDto.username, loginDto.passwordHash);
+            if (user == null)
+                return BadRequest("Invalid username or password");
+
+            var token = _jwtHelper.GenerateToken(user); // token có thể encode role
+
+            return Ok(new 
+            {
+                token,
+                user = new 
+                {
+                    id = user.Id,
+                    username = user.Username,
+                    roleId = user.AuthRoleId,
+                    roleName = user.AuthRole.Name
+                }
+            });
+        }
+
     }
 }
