@@ -11,7 +11,7 @@ namespace StarSecurityApi.Controllers
         private readonly IServiceService _service;
         public ServiceController(IServiceService service) => _service = service;
 
-        [HttpGet]
+        [HttpGet("getall")]
         public async Task<IActionResult> GetAll() => Ok(await _service.GetAllAsync());
 
         [HttpGet("{id}")]

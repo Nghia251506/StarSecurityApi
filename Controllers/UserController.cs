@@ -78,12 +78,20 @@ namespace StarSecurityApi.Controllers
             return Ok(new 
             {
                 token,
-                user = new 
+                user = new
                 {
                     id = user.Id,
                     username = user.Username,
                     roleId = user.AuthRoleId,
-                    roleName = user.AuthRole.Name
+                    roleName = user.AuthRole.Name,
+                    employeeCode = user.Employee.EmployeeCode,
+                    employeeName = user.Employee.FullName,
+                    employeDeaprtment = user.Employee.Department.Name,
+                    employeeGrade = user.Employee.Grade.Name,
+                    employeePhone = user.Employee.Phone,
+                    employeeAddress = user.Employee.Address,
+                    employeeEducation = user.Employee.Education,
+                    employeeJobTile = user.Employee.JobTitle
                 }
             });
         }

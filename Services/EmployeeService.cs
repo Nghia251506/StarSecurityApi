@@ -33,16 +33,27 @@ namespace StarSecurityApi.Services
 
         public async Task<EmployeeReadDto?> GetByIdAsync(int id)
         {
-            var emp = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+            var emp = await _context.Employees
+            .Include(e => e.Department)
+            .Include(e => e.Grade)
+            .FirstOrDefaultAsync(x => x.Id == id);
             if (emp == null) return null;
 
             return new EmployeeReadDto
             {
                 Id = emp.Id,
                 EmployeeCode = emp.EmployeeCode,
+                FirstName = emp.FirstName,
+                LastName = emp.LastName,
                 FullName = emp.FullName,
+                Address = emp.Address,
                 Phone = emp.Phone,
                 Email = emp.Email,
+                Education = emp.Education,
+                DepartmentId = emp.DepartmentId,
+                DepartmentName = emp.Department.Name,
+                GradeId = emp.GradeId,
+                GradeName = emp.Grade.Name,
                 JobTitle = emp.JobTitle,
                 Status = emp.Status,
             };

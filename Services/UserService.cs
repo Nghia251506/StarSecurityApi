@@ -33,7 +33,11 @@ namespace StarSecurityApi.Service
         public async Task<User?> LoginAsync(string username, string password)
         {
             var user = await _context.Users
-                .Include(u => u.AuthRole)  // load role từ database
+                .Include(u => u.AuthRole)
+                .Include(u => u.Employee)
+                .ThenInclude(e => e.Department)
+                .Include(u => u.Employee)
+                .ThenInclude(e => e.Grade)
                 .FirstOrDefaultAsync(u => u.Username == username);
 
             if (user == null) return null;

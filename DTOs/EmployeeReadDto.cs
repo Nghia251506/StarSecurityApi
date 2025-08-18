@@ -1,3 +1,5 @@
+using StarSecurityApi.Models;
+
 namespace StarSecurityApi.Dtos.Employee
 {
     public class EmployeeReadDto
@@ -5,9 +7,20 @@ namespace StarSecurityApi.Dtos.Employee
         public int Id { get; set; }
         public string EmployeeCode { get; set; } = null!;
         public string FullName { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
+        public string? LastName { get; set; }
+        public string? Address { get; set; }
         public string? Phone { get; set; }
         public string? Email { get; set; }
+        public string? Education { get; set; }
+        public int? DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
+        public Department? Department { get; set; }
+        public int? GradeId { get; set; }
+        public string GradeName { get; set; }
+        public Grade Grade { get; set; }
         public string? JobTitle { get; set; }
-        public string Status { get; set; } = null!;
+        public DateTime? DateOfJoin { get; set; }
+        public string Status { get; set; } = "active";
     }
 }

@@ -94,6 +94,7 @@ namespace StarSecurityApi.Data
              {
                  e.ToTable("auth_roles");
                  e.HasKey(x => x.Id);
+                 e.Property(x => x.Id);
                  e.Property(x => x.Name).HasColumnName("name");
                  e.Property(x => x.Description).HasColumnName("description");
                  e.Property(x => x.CanManageEmployees).HasColumnName("can_manage_employees");
@@ -110,6 +111,14 @@ namespace StarSecurityApi.Data
                 e.Property(x => x.Name).HasColumnName("name");
                 e.Property(x => x.Level).HasColumnName("level");
                 e.Property(x => x.Description).HasColumnName("description");
+            });
+
+            modelBuilder.Entity<Department>(e =>
+            {
+                e.ToTable("departments");
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Name).HasColumnName("name");
+                e.Property(x => x.CreateAt).HasColumnName("created_at");
             });
 
             modelBuilder.Entity<Branche>(e =>
