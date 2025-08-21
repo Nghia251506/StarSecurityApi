@@ -22,6 +22,7 @@ namespace StarSecurityApi.Data
         public DbSet<Vacancy> Vacancies { get; set; }
         public DbSet<VacancyApplication> VacancyApplications { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
+        public DbSet<AboutUs> AboutUses { get; set; }
 
 
 
@@ -352,7 +353,15 @@ namespace StarSecurityApi.Data
                         .HasForeignKey(x => x.ClientId)
                         .OnDelete(DeleteBehavior.SetNull);
                 });
-
+            modelBuilder.Entity<AboutUs>(e =>
+            {
+                e.ToTable("about_us");
+                e.HasKey(x => x.Id);
+                e.Property(x => x.SectionContent).HasColumnName("section_content");
+                e.Property(x => x.SectionTitle).HasColumnName("section_title");
+                e.Property(x => x.ImageUrl).HasColumnName("image_url");
+                e.Property(x => x.VideoUrl).HasColumnName("video_url");
+            });
 
         }
     }

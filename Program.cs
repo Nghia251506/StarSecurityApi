@@ -95,6 +95,7 @@ builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IVacancyService, VacancyService>();
 builder.Services.AddScoped<IVacancyApplicationService, VacancyApplicationService>();
 builder.Services.AddScoped<ITestimonialService, TestimonialService>();
+builder.Services.AddScoped<IAboutUsService, AboutUsService>();
 builder.Services.AddSingleton<JwtHelper>();
 builder.Services.AddAutoMapper(typeof(Program));
 
