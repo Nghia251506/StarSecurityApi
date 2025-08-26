@@ -1,4 +1,5 @@
 using System;
+using StarSecurityApi.Dtos.ServicePackage;
 
 namespace StarSecurityApi.Dtos.Service
 {
@@ -10,5 +11,6 @@ namespace StarSecurityApi.Dtos.Service
         public string Division { get; set; } = null!;
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; }
+        public List<ServicePackageReadDto> Packages { get; set; }
     }
 }

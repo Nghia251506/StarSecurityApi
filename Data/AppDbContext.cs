@@ -23,6 +23,7 @@ namespace StarSecurityApi.Data
         public DbSet<VacancyApplication> VacancyApplications { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<AboutUs> AboutUses { get; set; }
+        public DbSet<ServicesPackage> ServicesPackages{ get; set; }
 
 
 
@@ -321,20 +322,20 @@ namespace StarSecurityApi.Data
 
             modelBuilder.Entity<VacancyApplication>(e =>
                 {
-                e.ToTable("vacancy_applications");
-                e.HasKey(x => x.Id);
+                    e.ToTable("vacancy_applications");
+                    e.HasKey(x => x.Id);
 
-                e.Property(x => x.VacancyId).HasColumnName("vacancy_id");
-                e.Property(x => x.ApplicantName).HasColumnName("applicant_name");
-                e.Property(x => x.ApplicantContact).HasColumnName("applicant_contact");
-                e.Property(x => x.ResumeUrl).HasColumnName("resume_url");
-                e.Property(x => x.AppliedAt).HasColumnName("applied_at");
-                e.Property(x => x.Status).HasColumnName("status");
+                    e.Property(x => x.VacancyId).HasColumnName("vacancy_id");
+                    e.Property(x => x.ApplicantName).HasColumnName("applicant_name");
+                    e.Property(x => x.ApplicantContact).HasColumnName("applicant_contact");
+                    e.Property(x => x.ResumeUrl).HasColumnName("resume_url");
+                    e.Property(x => x.AppliedAt).HasColumnName("applied_at");
+                    e.Property(x => x.Status).HasColumnName("status");
 
-                e.HasOne(x => x.Vacancy)
-                    .WithMany()
-                    .HasForeignKey(x => x.VacancyId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    e.HasOne(x => x.Vacancy)
+                        .WithMany()
+                        .HasForeignKey(x => x.VacancyId)
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
             modelBuilder.Entity<Testimonial>(e =>
                 {
@@ -363,6 +364,20 @@ namespace StarSecurityApi.Data
                 e.Property(x => x.VideoUrl).HasColumnName("video_url");
             });
 
+            modelBuilder.Entity<ServicesPackage>(e =>
+            {
+                e.ToTable("service_packages");
+                e.HasKey(x => x.Id);
+                e.Property(x => x.ServiceId).HasColumnName("service_id");
+                e.Property(x => x.PackageName).HasColumnName("package_name");
+                e.Property(x => x.StaffRange).HasColumnName("staff_range");
+                e.Property(x => x.Price).HasColumnName("price");
+                e.Property(x => x.Note).HasColumnName("note");
+                e.HasOne(x => x.Service)
+                    .WithMany(s => s.Packages)
+                    .HasForeignKey(x => x.ServiceId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
     }
 

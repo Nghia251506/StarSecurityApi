@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using StarSecurityApi.Data;
 using StarSecurityApi.Dtos.Service;
+using StarSecurityApi.Dtos.ServicePackage;
 using StarSecurityApi.Models;
 
 namespace StarSecurityApi.Services
@@ -27,8 +28,12 @@ namespace StarSecurityApi.Services
 
         public async Task<ServiceReadDto?> GetByIdAsync(int id)
         {
-            var s = await _context.Services.FindAsync(id);
+            var s = await _context.Services
+                .Include(x => x.Packages)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             if (s == null) return null;
+
             return new ServiceReadDto
             {
                 Id = s.Id,
@@ -36,7 +41,15 @@ namespace StarSecurityApi.Services
                 Name = s.Name,
                 Division = s.Division,
                 Description = s.Description,
-                CreatedAt = s.CreatedAt
+                CreatedAt = s.CreatedAt,
+                Packages = s.Packages.Select(p => new ServicePackageReadDto
+                {
+                    Id = p.Id,
+                    PackageName = p.PackageName,
+                    StaffRange = p.StaffRange,
+                    Price = p.Price,
+                    Note = p.Note
+                }).ToList()
             };
         }
 
