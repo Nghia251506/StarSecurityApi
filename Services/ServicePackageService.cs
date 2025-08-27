@@ -27,7 +27,7 @@ namespace StarSecurityApi.Services
 
         public async Task<ServicePackageReadDto?> GetByIdAsync(int id)
         {
-            var s = await _context.ServicesPackages.FindAsync(id);
+            var s = await _context.ServicesPackages.Include(e => e.Service).FirstOrDefaultAsync(x => x.Id == id);
             if (s == null) return null;
             return new ServicePackageReadDto
             {
