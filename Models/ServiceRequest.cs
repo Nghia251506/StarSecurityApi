@@ -9,6 +9,8 @@ namespace StarSecurityApi.Models
         public string? Address { get; set; }
         public int ServiceId { get; set; }
         public string? RequestDetails { get; set; }
+        public DateTime StartDate {get;set;}
+        public DateTime EndDate {get;set;}
         public string Status { get; set; } = "pending";
         public int? AssignedEmployeeId { get; set; }
         public DateTime CreatedAt { get; set; }

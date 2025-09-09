@@ -160,6 +160,8 @@ namespace StarSecurityApi.Data
                     e.Property(x => x.Address).HasColumnName("address");
                     e.Property(x => x.ServiceId).HasColumnName("service_id");
                     e.Property(x => x.RequestDetails).HasColumnName("request_details");
+                    e.Property(x => x.StartDate).HasColumnName("start_date");
+                    e.Property(x => x.EndDate).HasColumnName("end_date");
                     e.Property(x => x.Status).HasColumnName("status");
                     e.Property(x => x.AssignedEmployeeId).HasColumnName("assigned_employee_id");
                     e.Property(x => x.CreatedAt).HasColumnName("created_at");

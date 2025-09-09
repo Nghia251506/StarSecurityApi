@@ -25,6 +25,8 @@ namespace StarSecurityApi.Services
                     ServiceId = sr.ServiceId,
                     ServiceName = sr.Service.Name,
                     RequestDetails = sr.RequestDetails,
+                    StartDate = sr.StartDate,
+                    EndDate = sr.EndDate,
                     Status = sr.Status,
                     AssignedEmployeeId = sr.AssignedEmployeeId,
                     AssignedEmployeeName = sr.AssignedEmployee != null ? sr.AssignedEmployee.FullName : null,
@@ -52,6 +54,8 @@ namespace StarSecurityApi.Services
                 ServiceId = sr.ServiceId,
                 ServiceName = sr.Service.Name,
                 RequestDetails = sr.RequestDetails,
+                StartDate = sr.StartDate,
+                EndDate = sr.EndDate,
                 Status = sr.Status,
                 AssignedEmployeeId = sr.AssignedEmployeeId,
                 AssignedEmployeeName = sr.AssignedEmployee?.FullName,
@@ -69,6 +73,9 @@ namespace StarSecurityApi.Services
                 Address = dto.Address,
                 ServiceId = dto.ServiceId,
                 RequestDetails = dto.RequestDetails,
+                StartDate = dto.StartDate,
+                EndDate = dto.EndDate,
+                AssignedEmployeeId = dto.AssignedEmployeeId,
                 CreatedAt = DateTime.Now
             };
 
@@ -89,6 +96,8 @@ namespace StarSecurityApi.Services
             sr.Address = dto.Address;
             sr.ServiceId = dto.ServiceId;
             sr.RequestDetails = dto.RequestDetails;
+            sr.StartDate = dto.StartDate;
+            sr.EndDate = dto.EndDate;
             sr.Status = dto.Status;
             sr.AssignedEmployeeId = dto.AssignedEmployeeId;
 

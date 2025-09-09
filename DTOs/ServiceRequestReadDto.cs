@@ -10,6 +10,8 @@ namespace StarSecurityApi.Dtos.ServiceRequest
         public int ServiceId { get; set; }
         public string ServiceName { get; set; } = null!;
         public string? RequestDetails { get; set; }
+        public DateTime StartDate {get;set;}
+        public DateTime EndDate {get;set;}
         public string Status { get; set; } = "pending";
         public int? AssignedEmployeeId { get; set; }
         public string? AssignedEmployeeName { get; set; }
