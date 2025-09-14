@@ -25,7 +25,7 @@ namespace StarSecurityApi.Services
                     FullName = e.FullName,
                     Phone = e.Phone,
                     Email = e.Email,
-                    JobTitle = e.JobTitle,
+                    Job = e.Job,
                     Status = e.Status,
                 })
                 .ToListAsync();
@@ -54,7 +54,7 @@ namespace StarSecurityApi.Services
                 DepartmentName = emp.Department.Name,
                 GradeId = emp.GradeId,
                 GradeName = emp.Grade.Name,
-                JobTitle = emp.JobTitle,
+                Job = emp.Job,
                 Status = emp.Status,
             };
         }
@@ -62,7 +62,7 @@ namespace StarSecurityApi.Services
         public async Task<EmployeeReadDto> CreateAsync(EmployeeCreateDto dto)
         {
             await _context.Database.ExecuteSqlRawAsync(
-                "CALL sp_add_employee({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10})",
+                "CALL sp_add_employee({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11})",
                 dto.FirstName,
                 dto.LastName ?? "",
                 dto.Address ?? "",
@@ -71,7 +71,8 @@ namespace StarSecurityApi.Services
                 dto.Education ?? "",
                 dto.DepartmentId ?? (object)null,
                 dto.GradeId ?? (object)null,
-                dto.JobTitle ?? "",
+                dto.JobId ?? (object)null,
+                dto.ServiceId ?? (object)null,
                 dto.DateOfJoin,
                 dto.Status ?? ""
             );
@@ -87,7 +88,7 @@ namespace StarSecurityApi.Services
                 FullName = newEmp.FullName ?? $"{newEmp.FirstName} {newEmp.LastName}",
                 Phone = newEmp.Phone,
                 Email = newEmp.Email,
-                JobTitle = newEmp.JobTitle,
+                Job = newEmp.Job,
                 Status = newEmp.Status
             };
         }
@@ -104,7 +105,7 @@ namespace StarSecurityApi.Services
             existing.Education = dto.Education;
             existing.DepartmentId = dto.DepartmentId;
             existing.GradeId = dto.GradeId;
-            existing.JobTitle = dto.JobTitle;
+            existing.JobId = dto.JobId;
             existing.DateOfJoin = dto.DateOfJoin;
             existing.Status = dto.Status;
 

@@ -1,5 +1,5 @@
 using StarSecurityApi.Models;
-
+using ServiceEmplement = StarSecurityApi.Models.ServiceRequest;
 namespace StarSecurityApi.Dtos.Employee
 {
     public class EmployeeReadDto
@@ -19,7 +19,10 @@ namespace StarSecurityApi.Dtos.Employee
         public int? GradeId { get; set; }
         public string GradeName { get; set; }
         public Grade Grade { get; set; }
-        public string? JobTitle { get; set; }
+        public int? JobId { get; set; }
+        public ServiceEmplement Job { get; set; }
+        public int? ServiceId { get; set; }
+        public Services1 service { get; set; }
         public DateTime? DateOfJoin { get; set; }
         public string Status { get; set; } = "active";
     }

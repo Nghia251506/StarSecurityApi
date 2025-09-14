@@ -91,7 +91,7 @@ namespace StarSecurityApi.Controllers
                     employeePhone = user.Employee.Phone,
                     employeeAddress = user.Employee.Address,
                     employeeEducation = user.Employee.Education,
-                    employeeJobTile = user.Employee.JobTitle
+                    employeeJobTile = user.Employee.Job
                 }
             });
         }

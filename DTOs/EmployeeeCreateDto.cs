@@ -1,3 +1,5 @@
+using StarSecurityApi.Models;
+using ServiceEmplement = StarSecurityApi.Models.ServiceRequest;
 namespace StarSecurityApi.Dtos.Employee
 {
     public class EmployeeCreateDto
@@ -10,7 +12,8 @@ namespace StarSecurityApi.Dtos.Employee
         public string? Education { get; set; }
         public int? DepartmentId { get; set; }
         public int? GradeId { get; set; }
-        public string? JobTitle { get; set; }
+        public int? JobId { get; set; }
+        public int? ServiceId { get; set; }
         public DateTime? DateOfJoin { get; set; }
         public string Status { get; set; } = "active";
     }

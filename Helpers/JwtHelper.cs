@@ -41,7 +41,10 @@ namespace StarSecurityApi.Helpers
                 new Claim("employeePhone", user.Employee?.Phone ?? ""),
                 new Claim("employeeAddress", user.Employee?.Address ?? ""),
                 new Claim("employeeEducation", user.Employee?.Education ?? ""),
-                new Claim("employeeJobTitle", user.Employee?.JobTitle ?? "")
+                // new Claim("fullname", user.),
+                // new Claim("phone", user.Employee?.Education ?? ""),
+                // new Claim("email", user.Employee?.Education ?? ""),
+                // new Claim("employeeJob", user.Employee?.Job.ClientName ?? "")
             };
 
             var token = new JwtSecurityToken(

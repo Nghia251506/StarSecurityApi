@@ -15,13 +15,9 @@ namespace StarSecurityApi.Data
         public DbSet<Branche> Branches { get; set; }
         public DbSet<Services1> Services { get; set; }
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<ClientServices> ClientServices { get; set; }
-        public DbSet<StaffAssignment> StaffAssignments { get; set; }
         public DbSet<Achievement> Achievements { get; set; }
         public DbSet<Vacancy> Vacancies { get; set; }
         public DbSet<VacancyApplication> VacancyApplications { get; set; }
-        public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<AboutUs> AboutUses { get; set; }
         public DbSet<ServicesPackage> ServicesPackages{ get; set; }
 
@@ -45,7 +41,8 @@ namespace StarSecurityApi.Data
                 e.Property(x => x.Status).HasColumnName("status");
                 e.Property(x => x.DepartmentId).HasColumnName("department_id");
                 e.Property(x => x.GradeId).HasColumnName("grade_id");
-                e.Property(x => x.JobTitle).HasColumnName("job_title");
+                e.Property(x => x.JobId).HasColumnName("job_id");
+                e.Property(x => x.ServiceId).HasColumnName("service_id");
                 e.Property(x => x.CreatedAt).HasColumnName("created_at");
                 // FKs
                 e.HasOne(x => x.Department)
@@ -177,99 +174,6 @@ namespace StarSecurityApi.Data
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 
-            modelBuilder.Entity<Client>(entity =>
-            {
-                entity.ToTable("clients");
-
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Id)
-                      .HasColumnName("id");
-
-                entity.Property(e => e.Name)
-                      .HasColumnName("name")
-                      .IsRequired()
-                      .HasMaxLength(200);
-
-                entity.Property(e => e.ContactName)
-                      .HasColumnName("contact_name")
-                      .HasMaxLength(120);
-
-                entity.Property(e => e.ContactPhone)
-                      .HasColumnName("contact_phone")
-                      .HasMaxLength(30);
-
-                entity.Property(e => e.ContactEmail)
-                      .HasColumnName("contact_email")
-                      .HasMaxLength(100);
-
-                entity.Property(e => e.Address)
-                      .HasColumnName("address");
-
-                entity.Property(e => e.Notes)
-                      .HasColumnName("notes");
-
-                entity.Property(e => e.CreatedAt)
-                      .HasColumnName("created_at")
-                      .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.HasIndex(e => e.Name)
-                      .IsUnique()
-                      .HasDatabaseName("uk_client_name");
-            });
-
-            modelBuilder.Entity<ClientServices>(e =>
-                {
-                    e.ToTable("client_services");
-                    e.HasKey(x => x.Id);
-                    e.Property(x => x.ClientId).HasColumnName("client_id");
-                    e.Property(x => x.ServiceId).HasColumnName("service_id");
-                    e.Property(x => x.StartDate).HasColumnName("start_date");
-                    e.Property(x => x.EndDate).HasColumnName("end_date");
-                    e.Property(x => x.StaffCount).HasColumnName("staff_count");
-                    e.Property(x => x.Notes).HasColumnName("notes");
-                    e.Property(x => x.CreatedAt).HasColumnName("created_at");
-
-                    e.HasOne(x => x.Client)
-                        .WithMany()
-                        .HasForeignKey(x => x.ClientId)
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    e.HasOne(x => x.Service)
-                        .WithMany()
-                        .HasForeignKey(x => x.ServiceId)
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity<StaffAssignment>(e =>
-                {
-                    e.ToTable("staff_assignments");
-                    e.HasKey(x => x.Id);
-
-                    e.Property(x => x.EmployeeId).HasColumnName("employee_id");
-                    e.Property(x => x.ClientId).HasColumnName("client_id");
-                    e.Property(x => x.ServiceId).HasColumnName("service_id");
-                    e.Property(x => x.AssignedFrom).HasColumnName("assigned_from");
-                    e.Property(x => x.AssignedTo).HasColumnName("assigned_to");
-                    e.Property(x => x.RoleDescription).HasColumnName("role_description");
-                    e.Property(x => x.CreatedAt).HasColumnName("created_at");
-
-                    e.HasOne(x => x.Employee)
-                        .WithMany()
-                        .HasForeignKey(x => x.EmployeeId)
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    e.HasOne(x => x.Client)
-                        .WithMany()
-                        .HasForeignKey(x => x.ClientId)
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    e.HasOne(x => x.Service)
-                        .WithMany()
-                        .HasForeignKey(x => x.ServiceId)
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity<Achievement>(e =>
                 {
                     e.ToTable("achievements");
@@ -338,23 +242,6 @@ namespace StarSecurityApi.Data
                         .WithMany()
                         .HasForeignKey(x => x.VacancyId)
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-            modelBuilder.Entity<Testimonial>(e =>
-                {
-                    e.ToTable("testimonials");
-                    e.HasKey(x => x.Id);
-
-                    e.Property(x => x.ClientId).HasColumnName("client_id");
-                    e.Property(x => x.AuthorName).HasColumnName("author_name");
-                    e.Property(x => x.AuthorTitle).HasColumnName("author_title");
-                    e.Property(x => x.Content).HasColumnName("content");
-                    e.Property(x => x.Visible).HasColumnName("visible");
-                    e.Property(x => x.CreatedAt).HasColumnName("created_at");
-
-                    e.HasOne(x => x.Client)
-                        .WithMany()
-                        .HasForeignKey(x => x.ClientId)
-                        .OnDelete(DeleteBehavior.SetNull);
                 });
             modelBuilder.Entity<AboutUs>(e =>
             {
