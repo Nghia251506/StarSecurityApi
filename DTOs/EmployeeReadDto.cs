@@ -21,8 +21,10 @@ namespace StarSecurityApi.Dtos.Employee
         public Grade Grade { get; set; }
         public int? JobId { get; set; }
         public ServiceEmplement Job { get; set; }
+        public string JobName { get; set; }
         public int? ServiceId { get; set; }
         public Services1 service { get; set; }
+        public string ServiceName { get; set; }
         public DateTime? DateOfJoin { get; set; }
         public string Status { get; set; } = "active";
     }

@@ -53,12 +53,15 @@ namespace StarSecurityApi.Service
             var user = new User
             {
                 Id = dto.Id,
-                EmployeeId = dto.Employee_id,
+                FullName = dto.FullName,
+                Phone = dto.Phone,
+                Email = dto.Email,
                 Username = dto.Username,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password_hash),
                 AuthRoleId = dto.Auth_role_id,
                 LastLogin = dto.Last_login,
-                CreatedAt = dto.CreateAt
+                CreatedAt = DateTime.Now,
+                EmployeeId = dto.Employee_id > 0 ? dto.Employee_id : 0
             };
 
             _context.Users.Add(user);

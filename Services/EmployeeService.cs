@@ -25,7 +25,8 @@ namespace StarSecurityApi.Services
                     FullName = e.FullName,
                     Phone = e.Phone,
                     Email = e.Email,
-                    Job = e.Job,
+                    JobName = e.Job.ClientName,
+                    ServiceName = e.service.Name,
                     Status = e.Status,
                 })
                 .ToListAsync();
@@ -36,6 +37,8 @@ namespace StarSecurityApi.Services
             var emp = await _context.Employees
             .Include(e => e.Department)
             .Include(e => e.Grade)
+            .Include(e => e.Job)
+            .Include(e => e.service)
             .FirstOrDefaultAsync(x => x.Id == id);
             if (emp == null) return null;
 
@@ -54,7 +57,10 @@ namespace StarSecurityApi.Services
                 DepartmentName = emp.Department.Name,
                 GradeId = emp.GradeId,
                 GradeName = emp.Grade.Name,
-                Job = emp.Job,
+                JobId = emp.JobId,
+                JobName = emp.Job?.ClientName,
+                ServiceId = emp.ServiceId,
+                ServiceName = emp.service?.Name,
                 Status = emp.Status,
             };
         }
@@ -106,6 +112,7 @@ namespace StarSecurityApi.Services
             existing.DepartmentId = dto.DepartmentId;
             existing.GradeId = dto.GradeId;
             existing.JobId = dto.JobId;
+            existing.ServiceId = dto.ServiceId;
             existing.DateOfJoin = dto.DateOfJoin;
             existing.Status = dto.Status;
 

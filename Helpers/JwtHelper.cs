@@ -41,10 +41,10 @@ namespace StarSecurityApi.Helpers
                 new Claim("employeePhone", user.Employee?.Phone ?? ""),
                 new Claim("employeeAddress", user.Employee?.Address ?? ""),
                 new Claim("employeeEducation", user.Employee?.Education ?? ""),
-                // new Claim("fullname", user.),
-                // new Claim("phone", user.Employee?.Education ?? ""),
-                // new Claim("email", user.Employee?.Education ?? ""),
-                // new Claim("employeeJob", user.Employee?.Job.ClientName ?? "")
+                new Claim("fullname", user.FullName ?? ""),
+                new Claim("phone", user.Phone ?? ""),
+                new Claim("email", user.Email ?? ""),
+                new Claim("employeeJob", user.Employee?.Job?.ClientName ?? "")
             };
 
             var token = new JwtSecurityToken(

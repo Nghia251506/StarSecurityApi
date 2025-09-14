@@ -68,6 +68,9 @@ namespace StarSecurityApi.Data
                 e.Property(x => x.LastLogin).HasColumnName("last_login");
                 e.Property(x => x.CreatedAt).HasColumnName("created_at");
                 e.Property(x => x.EmployeeId).HasColumnName("employee_id");
+                e.Property(x => x.Email).HasColumnName("email");
+                e.Property(x => x.FullName).HasColumnName("full_name");
+                e.Property(x => x.Phone).HasColumnName("phone");
                 e.HasOne(x => x.AuthRole)
                 .WithMany()
                 .HasForeignKey(emp => emp.AuthRoleId)
