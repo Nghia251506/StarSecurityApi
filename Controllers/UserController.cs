@@ -75,7 +75,7 @@ namespace StarSecurityApi.Controllers
 
             var token = _jwtHelper.GenerateToken(user); // token có thể encode role
 
-            return Ok(new 
+            return Ok(new
             {
                 token,
                 user = new
@@ -83,15 +83,15 @@ namespace StarSecurityApi.Controllers
                     id = user.Id,
                     username = user.Username,
                     roleId = user.AuthRoleId,
-                    roleName = user.AuthRole.Name,
-                    employeeCode = user.Employee.EmployeeCode,
-                    employeeName = user.Employee.FullName,
-                    employeDeaprtment = user.Employee.Department.Name,
-                    employeeGrade = user.Employee.Grade.Name,
-                    employeePhone = user.Employee.Phone,
-                    employeeAddress = user.Employee.Address,
-                    employeeEducation = user.Employee.Education,
-                    employeeJobTile = user.Employee.Job
+                    roleName = user.AuthRole?.Name,
+                    employeeCode = user.Employee?.EmployeeCode,
+                    employeeName = user.Employee?.FullName,
+                    employeDeaprtment = user.Employee?.Department?.Name,
+                    employeeGrade = user.Employee?.Grade?.Name,
+                    employeePhone = user.Employee?.Phone,
+                    employeeAddress = user.Employee?.Address,
+                    employeeEducation = user.Employee?.Education,
+                    employeeJobTile = user.Employee?.Job
                 }
             });
         }

@@ -2,13 +2,26 @@ using Microsoft.EntityFrameworkCore;
 using StarSecurityApi.Data;
 using StarSecurityApi.Dtos.ServiceRequest;
 using StarSecurityApi.Models;
+using Microsoft.AspNetCore.SignalR;
+using StarSecurityApi.Hubs;
+using StarSecurityApi.Service;
 
 namespace StarSecurityApi.Services
 {
     public class ServiceRequestService : IServiceRequestService
     {
         private readonly AppDbContext _context;
-        public ServiceRequestService(AppDbContext context) => _context = context;
+        private readonly IHubContext<JobHub> _hubContext;
+        private readonly IEmailService _emailService;
+        public ServiceRequestService(
+        AppDbContext context,
+        IHubContext<JobHub> hubContext,
+        IEmailService emailService)
+    {
+        _context = context;
+        _hubContext = hubContext;
+        _emailService = emailService;
+    }
 
         public async Task<IEnumerable<ServiceRequestReadDto>> GetAllAsync()
         {
@@ -82,8 +95,24 @@ namespace StarSecurityApi.Services
             _context.ServiceRequests.Add(sr);
             await _context.SaveChangesAsync();
 
-            return (await GetByIdAsync(sr.Id))!;
+            var result = (await GetByIdAsync(sr.Id))!;
+
+            // 🔥 Gửi signalr cho tất cả client (admin)
+            await _context.SaveChangesAsync();
+
+            // gửi realtime
+            await _hubContext.Clients.All.SendAsync("ReceiveJob", sr);
+
+            // // gửi email
+            // await _emailService.SendEmailAsync(
+            //     "admin@domain.com",
+            //     "Job mới",
+            //     $"Có job mới từ {sr.ClientName}, dịch vụ: {sr.ServiceId}"
+            // );
+
+            return result;
         }
+
 
         public async Task<bool> UpdateAsync(int id, ServiceRequestUpdateDto dto)
         {

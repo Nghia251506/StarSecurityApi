@@ -26,7 +26,9 @@ namespace StarSecurityApi.Services
                     Phone = e.Phone,
                     Email = e.Email,
                     JobName = e.Job.ClientName,
-                    ServiceName = e.service.Name,
+                    JobId = e.JobId,
+                    ServiceId = e.ServiceId,
+                    ServiceName = e.Services1.Name,
                     Status = e.Status,
                 })
                 .ToListAsync();
@@ -38,7 +40,7 @@ namespace StarSecurityApi.Services
             .Include(e => e.Department)
             .Include(e => e.Grade)
             .Include(e => e.Job)
-            .Include(e => e.service)
+            .Include(e => e.Services1)
             .FirstOrDefaultAsync(x => x.Id == id);
             if (emp == null) return null;
 
@@ -60,7 +62,7 @@ namespace StarSecurityApi.Services
                 JobId = emp.JobId,
                 JobName = emp.Job?.ClientName,
                 ServiceId = emp.ServiceId,
-                ServiceName = emp.service?.Name,
+                ServiceName = emp.Services1?.Name,
                 Status = emp.Status,
             };
         }

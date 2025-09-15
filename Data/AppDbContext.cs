@@ -55,6 +55,16 @@ namespace StarSecurityApi.Data
                     .HasForeignKey(emp => emp.GradeId)
                     .HasConstraintName("FK_Employee_Grade")
                     .OnDelete(DeleteBehavior.SetNull);
+                e.HasOne(x => x.Services1)
+                    .WithMany()
+                    .HasForeignKey(emp => emp.ServiceId)
+                    .HasConstraintName("FK_Employee_Service")
+                    .OnDelete(DeleteBehavior.SetNull);
+                e.HasOne(x => x.Job)
+                    .WithMany()
+                    .HasForeignKey(emp => emp.JobId)
+                    .HasConstraintName("FK_Employee_ServiceRequest")
+                    .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<User>(e =>

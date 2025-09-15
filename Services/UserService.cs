@@ -58,10 +58,10 @@ namespace StarSecurityApi.Service
                 Email = dto.Email,
                 Username = dto.Username,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password_hash),
-                AuthRoleId = dto.Auth_role_id,
+                AuthRoleId = dto.Auth_role_id.HasValue ? dto.Auth_role_id.Value : 5,
                 LastLogin = dto.Last_login,
                 CreatedAt = DateTime.Now,
-                EmployeeId = dto.Employee_id > 0 ? dto.Employee_id : 0
+                EmployeeId = dto.Employee_id.HasValue ? dto.Employee_id.Value : null
             };
 
             _context.Users.Add(user);

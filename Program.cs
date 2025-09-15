@@ -7,6 +7,7 @@ using StarSecurityApi.Services;
 using StarSecurityApi.Data;
 using StarSecurityApi.Service;
 using StarSecurityApi.Helpers;
+using StarSecurityApi.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -87,7 +88,8 @@ builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IAuthRoleService, AuthRoleService>();
 builder.Services.AddScoped<BranchService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
-builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
+builder.Services.AddScoped<IServiceRequestService, StarSecurityApi.Services.ServiceRequestService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IVacancyService, VacancyService>();
 builder.Services.AddScoped<IVacancyApplicationService, VacancyApplicationService>();
@@ -95,6 +97,9 @@ builder.Services.AddScoped<IAboutUsService, AboutUsService>();
 builder.Services.AddScoped<IServicePackageService, ServicePackageService>();
 builder.Services.AddSingleton<JwtHelper>();
 builder.Services.AddAutoMapper(typeof(Program));
+
+//hubs
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -107,4 +112,5 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<JobHub>("/jobHub");
 app.Run();
